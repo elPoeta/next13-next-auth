@@ -8,7 +8,7 @@ interface RequestBody {
 
 export const POST = async (req: Request) => {
   const body: RequestBody = await req.json();
-  console.log("body", body);
+
   const user = await prisma.user.findFirst({
     where: {
       email: body.email,
@@ -17,7 +17,6 @@ export const POST = async (req: Request) => {
   console.log("USER", user);
   if (user && (await bcrypt.compare(body.password, user.password))) {
     const { password, ...userWithoutPassword } = user;
-    console.log("USER-sin pass", userWithoutPassword);
 
     return new Response(JSON.stringify(userWithoutPassword));
   }
