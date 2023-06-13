@@ -40,10 +40,13 @@ const handler = NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
+      console.log("tpken JWT ", token);
       return { ...token, ...user };
     },
 
     async session({ session, token }) {
+      console.log("tpken session ", token);
+
       session.user = token as any;
       return session;
     },
